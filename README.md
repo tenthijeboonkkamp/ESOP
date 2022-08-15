@@ -113,6 +113,7 @@ struct WEVESTRAanleverData {
 ```
 
 Voorbeeld valide JSON:
+```json
 {
   "bv_adres_straat" : "Demostraat",
   "recipients" : [
@@ -296,3 +297,4 @@ Voorbeeld valide JSON:
   "bv_woonplaats" : "Amsterdam",
   "bv_adres_postcode" : "1234AB"
 }
+```
