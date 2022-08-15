@@ -1,6 +1,6 @@
 # Stock Appreciation Rights
 
-```
+```swift
 struct WEVESTRAanleverData {
 
     // WEVESTR zal de hieronder beschreven data aanleveren in een JSON-object naar een server. De server creërt de documenten en verschaft een url naar de locatie met de documenten. Verder afstemmen met WEVESTR developers hiervoor is nodig. 
