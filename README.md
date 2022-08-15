@@ -32,20 +32,10 @@ struct WEVESTRAanleverData {
 
     // Gegevens van de vertegenwoordigers van de BV. Veelal zal dat een of twee natuurlijk personen zijn. Van hun zijn naam en optioneel een titel vereist.
     let bv_representatives: [Representative]
-    enum Representative {
-       case natural(Natural)
-       case corporate(Corporate)
-    }
-
-    struct Natural {
-        let name:Translated<String>
-        let title:Translated<String>?
-    }
-
-    struct Corporate {
-        let name:Translated<String>
-        let title:Translated<String>?
-        let representatives: [Representative]
+    struct Representative:Codable, Hashable {
+        let name:TranslatedString
+        let title:TranslatedString?
+        let date:Date?
     }
 
     // Datum van de uitgifte van de SARs
@@ -66,7 +56,7 @@ struct WEVESTRAanleverData {
     // Per recipient moeten NAW gegevens, aantal set SARs (en op welke soort en aanduiding), en optioneel een vesting worden aangegeven. Met een set bedoel ik een verzameling van unieke elementen.
     let recipients: [Recipient<SoortAanduidingESOP>] = []
 
-    // Er zijn verschillende manieren om de waarde vast te stellen. Hieronder staan een aantal veelgebruikte methoden. In sommige gevallen moet ook een factor worden ingevoerd.
+    // Er zijn verschillende manieren om de waarde vast te stellen. Hieronder staan een aantal veelgebruikte methoden. In sommige gevallen moet ook een factor worden ingevoerd. Een custom keuze kan ook.
     enum MethodToDetermineValueOfSAR {
         case factorxNettoWinst(factor:Double)
         case factorxEBIT(factor:Double)
