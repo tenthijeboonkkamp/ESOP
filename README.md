@@ -22,35 +22,54 @@ struct WEVESTRAanleverData {
     }
 
     // Uitgevende BV NAW-gegevens en kvk-nummer
+    // Wat is de naam van de BV?
     let bv_name:String
+    // Wat is de straatnaam van de BV?
     let bv_adres_straat:String
+    // Wat is het straatnummer van de BV?
     let bv_adres_nummer:String
+    
+    //Wat is de eventuele adrestoevoeging van de BV?
     let bv_adres_toevoeging:String
+    
+    //Wat is de postcode van de BV?
     let bv_adres_postcode:String
+    
+    //Wat is de woonplaats van de BV? (e.g. Amsterdam, Utrecht, etc - te selecteren vanuit een gelimiteerde lijst van alle woonplaatsen (lijst te vinden via cbs.nl))
     let bv_woonplaats:Woonplaats
+    
+    // Wat is het kvk-nummer van de BV?
     let bv_kvk:String
 
     // Gegevens van de vertegenwoordigers van de BV. Veelal zal dat een of twee natuurlijk personen zijn. Van hun zijn naam en optioneel een titel vereist.
     let bv_representatives: [Representative]
     struct Representative:Codable, Hashable {
+        // Wat is de naam van de vertegenwoordiger van de BV? (dit is vrijwel altijd een bestuurder)
         let name:TranslatedString
+        // Optioneel: Wat is de titel van BV vertegenwoordiger (e.g. CEO, Bestuursvoorzitter, CFO, etc)?
         let title:TranslatedString?
+        // Optioneel (indien bekend): Wanneer ontvangt de ontvanger de SARs?
         let date:Date?
     }
 
     // Datum van de uitgifte van de SARs
+    // Optioneel (indien bekend): Wanneer worden de aandelen uitgegeven?
     let date:Date?
 
     // De BV kan kiezen of er een correctie wordt toegepast in verband met verwatering of dividenduitkering. Als dit niet het geval is, kan de waarde van de SAR door de BV worden beïnvloed door uitgifte nieuwe aandelen of dividenduitkering. Als er een correctie optreedt, zal de waarde van de SAR daardoor niet beïnvloed worden.
+    // Wil de BV dat de waarde van de certificaten wordt gecorrigeerd voor waardeveranderingen door verwatering of dividenduitkering?
     let correctie_op_waardering_in_verband_met_verwatering_of_dividenduitkering: Bool
 
     // De BV moet aangeven op welke manier de waarde van de SAR wordt bepaald.
+    // Op welke manier wilt u dat de waarde van de SAR wordt bepaald? (te selecteren vanuit een gelimiteerde lijst zoals hieronder aangegeven)
     let method_to_determine_value: MethodToDetermineValueOfSAR
 
     // De BV moet aangeven wie kan besluiten tot SAR-uitkering. Dit zal veelal het bestuur en/of de algemene vergadering zijn, maar een andere keuze is ook mogelijk.
+    // Wie wilt u dat besluit over te gaan tot uitkering van de SAR? (te selecteren vanuit een gelimiteerde lijst zoals hieronder aangegeven)
     let wie_kan_besluiten_tot_SAR_Uitkering: WieKanBesluiten
 
     // De BV moet aangeven wie kan besluiten tot beëindiging van de SAR. Dit zal veelal het bestuur en/of de algemene vergadering zijn, maar een andere keuze is ook mogelijk.
+    // Wie wilt u dat besluit over te gaan tot beëndiging van de SAR? (te selecteren vanuit een gelimiteerde lijst zoals hieronder aangegeven)
     let wie_kan_besluiten_tot_SAR_Beëindiging: WieKanBesluiten
 
     // Per recipient moeten NAW gegevens, aantal set SARs (en op welke soort en aanduiding), en optioneel een vesting worden aangegeven. Met een set bedoel ik een verzameling van unieke elementen.
@@ -71,23 +90,30 @@ struct WEVESTRAanleverData {
 
     enum WieKanBesluiten{
         case bestuur
-        case algemeneVergadering
-        case bestuurOfAlgemeneVergadering
-        case bestuurEnAlgemeneVergadering
+        case algemeneVergadering = "Algemene Vergadering"
+        case bestuurOfAlgemeneVergadering = "Bestuur of Algemene Vergadering"
+        case bestuurEnAlgemeneVergadering = "Bestuur en Algemene Vergadering"
         case custom(TranslatedString)
     }
 
     struct Recipient {
+    //Wat zijn de voornamen van de ontvanger van SARs?
         let person_names:[String]
+    //Wat is de achternaam van de ontvanger van SARs?
         let person_lastname:String
+   //Optioneel: Wat is de titel van de ontvanger van SARs? (e.g. investeerder, inkoopmanager, werknemer)
         let title:TranslatedString?
+   //Optioneel: Wanneer worden de SARs overgedragen aan de ontvanger?
         let date:Date?
         let sars:Set<StockAppreciationRight>
     }
 
     struct StockAppreciationRight {
+    // Hoeveel SARs worden aan deze ontvanger geschonken?
         let amount:Int
+    // Wat is de aanduiding van de aandelen waarop de SARs betrekking hebben?
         let aanduiding: SoortAanduiding
+    // Optioneel: Welke vesting is van toepassing op de SARs?
         let vesting:Vesting?
     }
 
